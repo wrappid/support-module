@@ -1,15 +1,13 @@
-import TestComponent from "./components/TestComponent";
-import TestComponentMobile from "./components/TestComponentMobile";
-import TestComponentWeb from "./components/TestComponentWeb";
+import ReportBug from "./components/ReportBug";
+import ReportIssueForm from "./components/ReportIssueForm";
+import RequestEnhancement from "./components/RequestEnhancement";
+import RequestFeature from "./components/RequestFeature";
+import RequestSupport from "./components/RequestSupport";
 
 export const ComponentRegistry = {
-  TestComponents      : { comp: TestComponent },
-  TestComponentsMobile: {
-    comp: TestComponentMobile,
-    web : false
-  },
-  TestComponentsWeb: {
-    comp  : TestComponentWeb,
-    mobile: false
-  }
+  ReportBug: { comp: ReportBug },
+  ReportIssueForm: { comp: ReportIssueForm },
+  RequestEnhancement: { comp: RequestEnhancement },
+  RequestFeature: { comp: RequestFeature },
+  RequestSupport: { comp: RequestSupport },
 };
