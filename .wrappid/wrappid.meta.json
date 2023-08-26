@@ -1,4 +1,14 @@
 {
     "projectType": "module",
-    "projectID": ""
+    "projectID": "",
+    "projectName": "support",
+    "remote": true,
+    "repoProvider": "github.com",
+    "repoOwner": "wrappid",
+    "repoURL": "https://github.com/wrappid/support-module.git",
+    "app": {
+        "renderType": []
+    },
+    "service": {},
+    "modules": {}
 }
