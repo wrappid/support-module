@@ -1,11 +1,16 @@
-const testFunctions = require("./functions/test.functions");
+const supportFunctions = require("./functions/support.functions");
 
 const functionsRegistry = {
-    "readTestData": testFunctions.readTestData,
-    "readTestDataAll": testFunctions.readTestDataAll,
-    "createTestData": testFunctions.createTestData,
-    "updateTestData": testFunctions.updateTestData,
-    "deleteTestData": testFunctions.deleteTestData,
+  postCreateIssueReport: supportFunctions.createIssue,
 };
-
+// IssueReportingForm
 exports.functionsRegistry = functionsRegistry;
+// const functionsRegistry = {
+    // "readsupportData": supportFunctions.readsupportData,
+    // "readsupportDataAll": supportFunctions.readsupportDataAll,
+    // "createsupportData": supportFunctions.createsupportData,
+    // "updatesupportData": supportFunctions.updatesupportData,
+    // "deletesupportData": supportFunctions.deletesupportData,
+// };
+
+// exports.functionsRegistry = functionsRegistry;

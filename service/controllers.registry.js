@@ -1,11 +1,11 @@
-const testController = require("./controllers/test.controller");
-
+const supportController = require("./controllers/support.controller");
+const {createIssueReport} = require("./validations/support.validation");
+const { CoreMiddlewaresRegistry } = require("@wrappid/service-core");
 const controllersRegistry = {
-    "testGetAllFunc": testController.testGetAllFunc,
-    "testGetFunc": testController.testGetFunc,
-    "testPostFunc": testController.testPostFunc,
-    "testPutFunc": testController.testPutFunc,
-    "testPatchFunc": testController.testPatchFunc,
-};
+    createIssueReport: [
+      CoreMiddlewaresRegistry.validation(createIssueReport),
+      supportController.createReportIssue,
+    ],
+  };
 
 exports.controllersRegistry = controllersRegistry;
