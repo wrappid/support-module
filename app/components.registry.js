@@ -4,7 +4,7 @@ import RequestEnhancement from "./components/RequestEnhancement";
 import RequestFeature from "./components/RequestFeature";
 import RequestSupport from "./components/RequestSupport";
 
-export const ComponentRegistry = {
+export const ComponentsRegistry = {
   ReportBug: { comp: ReportBug },
   ReportIssueForm: { comp: ReportIssueForm },
   RequestEnhancement: { comp: RequestEnhancement },
