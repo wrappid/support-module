@@ -1,4 +1,13 @@
 import {
+  FORM_IDS,
+  FORM_EDIT_MODE,
+  CoreForm,
+  CoreCardContent,
+  CoreCard,
+  getFullName,
+  config
+} from "@wrappid/core";
+import {
   browserName,
   deviceType,
   fullBrowserVersion,
@@ -6,20 +15,11 @@ import {
   mobileModel,
   mobileVendor,
   osName,
-  osVersion,
+  osVersion
 } from "react-device-detect";
 import { useSelector } from "react-redux";
 
-// import { ApplicationRegistry } from "../../../../ApplicationRegistry";
-import {
-  FORM_IDS,
-  FORM_EDIT_MODE,
-  CoreForm,
-  CoreCardContent,
-  CoreCard,
-  getFullName,
-  config,
-} from "@wrappid/core";
+// -- import { ApplicationRegistry } from "../../../../ApplicationRegistry";
 
 export default function ReportIssueForm(props) {
   const { title, isStacktrace = true, stackTrace, labels } = props;
@@ -44,28 +44,28 @@ export default function ReportIssueForm(props) {
               },
               client: {
                 browser: `${browserName} Ver: ${fullBrowserVersion}`,
-                device: `${deviceType}${
+                device : `${deviceType}${
                   isMobile ? " " + mobileVendor + " " + mobileModel : ""
                 }`,
-                os: `${osName} Ver: ${osVersion}`,
+                os       : `${osName} Ver: ${osVersion}`,
                 userAgent: navigator.userAgent,
               },
               frontend: {
                 url: window.location.href,
-                // version: ApplicationRegistry.version,
+                // -- version: ApplicationRegistry.version,
               },
             }),
             isStacktrace: isStacktrace,
-            labels: labels,
+            labels      : labels,
             reporterInfo: JSON.stringify({
               creationTime: new Date().toLocaleString(),
-              email: contact?.email,
-              name: getFullName(basic),
-              phone: contact?.phone,
-              role: role?.role,
+              email       : contact?.email,
+              name        : getFullName(basic),
+              phone       : contact?.phone,
+              role        : role?.role,
             }),
             stackTrace: stackTrace,
-            title: title,
+            title     : title,
           }}
         />
       </CoreCardContent>
