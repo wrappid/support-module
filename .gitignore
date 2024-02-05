@@ -134,3 +134,6 @@ dist
 
 # mac
 .DS_Store
+
+#attribution files
+scripts/attributions.gen.js
