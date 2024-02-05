@@ -1,14 +1,5 @@
+const { configProvider } = require("@wrappid/service-core");
 const fetch = require("node-fetch");
-const env = process.env.NODE_ENV || "development";
-// const config = require("../../config/config.json")[env];
-const {
-  configProvider,
-  coreConstant,
-  // databaseActions,
-  // databaseProvider,
-} = require("@wrappid/service-core");
-
-let config = configProvider;
 
 /**
  * 
@@ -90,14 +81,14 @@ const createIssue = async (
     let issueData = {
       title: title,
       body: issueBody,
-      labels: [...config.github.defaultLabels, ...labels],
+      labels: [...configProvider.github.defaultLabels, ...labels],
     };
 
-    let result = await fetch(config.github.createIssueURL, {
+    let result = await fetch(configProvider.github.createIssueURL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + config.github.token,
+        Authorization: "Bearer " + configProvider.github.token,
       },
       body: JSON.stringify(issueData),
     })
@@ -106,8 +97,7 @@ const createIssue = async (
         if (data) {
           return data;
         } else {
-          console.error("error: ", resdata);
-          throw new Error(res?.message || "Something went wrong.");
+          throw new Error("Something went wrong.");
         }
       })
       .catch((error) => {
