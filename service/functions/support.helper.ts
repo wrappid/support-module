@@ -1,6 +1,6 @@
-const { createIssue } = require("./support.functions");
+import { createIssue } from "./support.functions";
 
-module.exports.createReportIssuePost = async (req) => {
+export const createReportIssuePost = async (req:any) => {
   try {
     const {
       title,
@@ -12,14 +12,14 @@ module.exports.createReportIssuePost = async (req) => {
       labels,
     } = req?.body || {};
 
-    let data = await createIssue(
+    const data = await createIssue(
       title,
       description,
       stepsToCreate,
       stackTrace,
       JSON.parse(devInfo),
       JSON.parse(reporterInfo),
-      labels.map((label) => label.label)
+      labels.map((label: { label: any; }) => label.label)
     );
 
     if (data) {
@@ -27,7 +27,7 @@ module.exports.createReportIssuePost = async (req) => {
     } else {
       throw new Error("Something went wrong");
     }
-  } catch (error) {
+  } catch (error:any) {
     console.error(error);
     throw error;
   }

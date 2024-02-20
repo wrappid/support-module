@@ -1,5 +1,6 @@
-const { configProvider } = require("@wrappid/service-core");
-const fetch = require("node-fetch");
+import { configProvider } from "@wrappid/service-core";
+
+import fetch from "node-fetch-commonjs";
 
 /**
  * 
@@ -12,14 +13,14 @@ const fetch = require("node-fetch");
  * @param {*} labels 
  * @returns 
  */
-const createIssue = async (
-  title,
-  description,
-  stepsToCreate,
-  stackTrace,
-  devInfo,
-  reporterInfo,
-  labels
+export const createIssue = async (
+  title: any,
+  description: any,
+  stepsToCreate: any,
+  stackTrace: any,
+  devInfo: any,
+  reporterInfo: any,
+  labels: any
 ) => {
   try {
     /**
@@ -78,17 +79,17 @@ const createIssue = async (
     } else {
       issueBody += "No reporter information provided.";
     }
-    let issueData = {
+    const issueData = {
       title: title,
       body: issueBody,
-      labels: [...configProvider.github.defaultLabels, ...labels],
+      labels: [...configProvider().github.defaultLabels, ...labels],
     };
 
-    let result = await fetch(configProvider.github.createIssueURL, {
+    const result = await fetch(configProvider().github.createIssueURL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + configProvider.github.token,
+        Authorization: "Bearer " + configProvider().github.token,
       },
       body: JSON.stringify(issueData),
     })
@@ -100,14 +101,14 @@ const createIssue = async (
           throw new Error("Something went wrong.");
         }
       })
-      .catch((error) => {
+      .catch((error:any) => {
         console.error("error: ", error);
         throw new Error(error);
       });
     return result;
-  } catch (error) {
+  } catch (error:any) {
+    console.error(error);
     throw new Error(error?.message || "Something went wrong.");
   }
 };
 
-module.exports = { createIssue };
