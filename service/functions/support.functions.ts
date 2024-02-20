@@ -1,14 +1,6 @@
-const fetch = require("node-fetch");
-const env = process.env.NODE_ENV || "development";
-// const config = require("../../config/config.json")[env];
-const {
-  configProvider,
-  coreConstant,
-  // databaseActions,
-  // databaseProvider,
-} = require("@wrappid/service-core");
+import { configProvider } from "@wrappid/service-core";
 
-let config = configProvider;
+import fetch from "node-fetch-commonjs";
 
 /**
  * 
@@ -21,14 +13,14 @@ let config = configProvider;
  * @param {*} labels 
  * @returns 
  */
-const createIssue = async (
-  title,
-  description,
-  stepsToCreate,
-  stackTrace,
-  devInfo,
-  reporterInfo,
-  labels
+export const createIssue = async (
+  title: any,
+  description: any,
+  stepsToCreate: any,
+  stackTrace: any,
+  devInfo: any,
+  reporterInfo: any,
+  labels: any
 ) => {
   try {
     /**
@@ -87,17 +79,17 @@ const createIssue = async (
     } else {
       issueBody += "No reporter information provided.";
     }
-    let issueData = {
+    const issueData = {
       title: title,
       body: issueBody,
-      labels: [...config.github.defaultLabels, ...labels],
+      labels: [...configProvider().github.defaultLabels, ...labels],
     };
 
-    let result = await fetch(config.github.createIssueURL, {
+    const result = await fetch(configProvider().github.createIssueURL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + config.github.token,
+        Authorization: "Bearer " + configProvider().github.token,
       },
       body: JSON.stringify(issueData),
     })
@@ -106,18 +98,17 @@ const createIssue = async (
         if (data) {
           return data;
         } else {
-          console.error("error: ", resdata);
-          throw new Error(res?.message || "Something went wrong.");
+          throw new Error("Something went wrong.");
         }
       })
-      .catch((error) => {
+      .catch((error:any) => {
         console.error("error: ", error);
         throw new Error(error);
       });
     return result;
-  } catch (error) {
+  } catch (error:any) {
+    console.error(error);
     throw new Error(error?.message || "Something went wrong.");
   }
 };
 
-module.exports = { createIssue };

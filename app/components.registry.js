@@ -5,9 +5,9 @@ import RequestFeature from "./components/RequestFeature";
 import RequestSupport from "./components/RequestSupport";
 
 export const ComponentsRegistry = {
-  ReportBug: { comp: ReportBug },
-  ReportIssueForm: { comp: ReportIssueForm },
+  ReportBug         : { comp: ReportBug },
+  ReportIssueForm   : { comp: ReportIssueForm },
   RequestEnhancement: { comp: RequestEnhancement },
-  RequestFeature: { comp: RequestFeature },
-  RequestSupport: { comp: RequestSupport },
+  RequestFeature    : { comp: RequestFeature },
+  RequestSupport    : { comp: RequestSupport },
 };
