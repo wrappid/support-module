@@ -19,7 +19,7 @@ export const createReportIssuePost = async (req:any) => {
       stackTrace,
       JSON.parse(devInfo),
       JSON.parse(reporterInfo),
-      labels.map((label) => label.label)
+      labels.map((label: { label: any; }) => label.label)
     );
 
     if (data) {
@@ -27,7 +27,7 @@ export const createReportIssuePost = async (req:any) => {
     } else {
       throw new Error("Something went wrong");
     }
-  } catch (error) {
+  } catch (error:any) {
     console.error(error);
     throw error;
   }

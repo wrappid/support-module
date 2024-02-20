@@ -14,7 +14,7 @@ export async function createReportIssue(req: Request, res: Response) {
      */
     const data = await createReportIssuePost(req);
     res.status(data?.status).json(data);
-  } catch (error) {
+  } catch (error:any) {
     console.error("logout Error:: ", error);
     res.status(500).json({
       message: "Error to create issue",
