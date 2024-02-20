@@ -1,7 +1,5 @@
 import * as yup from "yup";
 
-
-
 const createIssueReport = {
   body: yup
     .object({

@@ -1,6 +1,8 @@
-import * as testController from "./controllers/test.controller";
+import { CoreMiddlewaresRegistry } from "@wrappid/service-core";
+import * as supportController from "./controllers/support.controller";
+import { createIssueReport } from "./validations/support.validation";
 
-const controllersRegistry = {
+const ControllersRegistry = {
   createIssueReport: [
     CoreMiddlewaresRegistry.validation(createIssueReport),
     supportController.createReportIssue,

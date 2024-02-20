@@ -1,6 +1,6 @@
-const { createIssue } = require("./support.functions");
+import { createIssue } from "./support.functions";
 
-module.exports.createReportIssuePost = async (req) => {
+export const createReportIssuePost = async (req:any) => {
   try {
     const {
       title,
@@ -12,7 +12,7 @@ module.exports.createReportIssuePost = async (req) => {
       labels,
     } = req?.body || {};
 
-    let data = await createIssue(
+    const data = await createIssue(
       title,
       description,
       stepsToCreate,

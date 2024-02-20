@@ -1,7 +1,7 @@
-const supportValidations = require("./validations/support.validation");
+import * as supportValidations from "./validations/support.validation";
 
-const validationsRegistry = {
+const ValidationsRegistry = {
   ...supportValidations
 };
 
-exports.validationsRegistry = validationsRegistry;
+export default ValidationsRegistry;
