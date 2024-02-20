@@ -1,4 +1,6 @@
-const yup = require("yup");
+import * as yup from "yup";
+
+
 
 const createIssueReport = {
   body: yup
@@ -7,9 +9,9 @@ const createIssueReport = {
     })
     .noUnknown()
     .strict(),
-  query: yup.object({}).noUnknown().strict(),
+  query: yup.object<any>().noUnknown().strict(),
 };
 
-module.exports = {
+export {
   createIssueReport
 };
