@@ -3,7 +3,14 @@ import * as yup from "yup";
 const createIssueReport = {
   body: yup
     .object({
-      name: yup.string().required(),
+      title: yup.string().required(),
+      description: yup.string(),
+      stepsToCreate: yup.string(),
+      stackTrace: yup.string(),
+      isStacktrace: yup.string(),
+      devInfo: yup.string().required(),
+      reporterInfo: yup.string().required(),
+      labels: yup.array()
     })
     .noUnknown()
     .strict(),
