@@ -1,4 +1,11 @@
+import { configProvider } from "@wrappid/service-core";
+import fetch from "node-fetch-commonjs";
 import { createIssue } from "./support.functions";
+
+interface ArrayUrlsTitles {
+  url: string;
+  title: string;
+}
 
 export const createReportIssuePost = async (req:any) => {
   try {
@@ -12,10 +19,15 @@ export const createReportIssuePost = async (req:any) => {
       labels,
     } = req?.body || {};
 
+
+    const urlAndTitleArray: ArrayUrlsTitles[] = await getAllIssueTitles();
+    if(matchString(urlAndTitleArray, title)){
+      return {status:200, message: "Issue already exist" };
+    }
     const data = await createIssue(
       title,
-      description,
-      stepsToCreate,
+      description,//
+      stepsToCreate,//
       stackTrace,
       JSON.parse(devInfo),
       JSON.parse(reporterInfo),
@@ -32,3 +44,45 @@ export const createReportIssuePost = async (req:any) => {
     throw error;
   }
 };
+
+
+async function getAllIssueTitles() {
+  try {
+    const response = await fetch(configProvider().github.createIssueURL, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + configProvider().github.token,
+      }
+    });
+    if (!response.ok) {
+      throw new Error(`Error fetching issues: ${response.statusText}`);
+    }
+    const issues:any = await response.json();
+    const urlAndTitleArray: ArrayUrlsTitles[] = issues.map((item: { url: string; title: string; }) => ({
+      url: item.url,
+      title: item.title,
+    }));
+    return urlAndTitleArray;
+  } catch (error) {
+    console.log(error);
+    throw error;
+    
+  }
+  
+}
+
+function matchString(urlAndTitleArray: ArrayUrlsTitles[], targetString: string) {
+  try {
+    const stringArray: string[] = urlAndTitleArray.map((item: {title: string; }) => item.title);
+    for (const string of stringArray) {
+      if (string.includes(targetString)) {
+        return true;
+      }
+    }
+    return false;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
