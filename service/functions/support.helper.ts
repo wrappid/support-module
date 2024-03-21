@@ -2,7 +2,7 @@ import { configProvider } from "@wrappid/service-core";
 import fetch from "node-fetch-commonjs";
 import { createIssue } from "./support.functions";
 
-interface ArrayUrlsTitles {
+type ArrayUrlsTitles = {
   url: string;
   title: string;
 }
@@ -22,7 +22,29 @@ export const createReportIssuePost = async (req:any) => {
 
     const urlAndTitleArray: ArrayUrlsTitles[] = await getAllIssueTitles();
     if(matchString(urlAndTitleArray, title)){
-      return {status:200, message: "Issue already exist" };
+      const commentBody = "This is test  comment from Node.js script.";
+      const issueUrl: string = urlAndTitleArray.find((item:ArrayUrlsTitles) => item.title === title)?.url as string;
+      const commentUrl: string = issueUrl + "/comments";
+      const headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${configProvider().github.token}`
+      };
+      const payload = {
+        body: commentBody
+      };
+      await fetch(commentUrl, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(payload)
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Error creating comment: ${response.status}`);
+          }
+          console.log("Comment created successfully!");
+        });  
+      return {status:200, message: "Comment created successfully!" };
+      
     }
     const data = await createIssue(
       title,
