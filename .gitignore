@@ -137,3 +137,6 @@ dist
 
 #attribution files
 scripts/attributions.gen.js
+# Package Config
+package-lock.json
+package.json

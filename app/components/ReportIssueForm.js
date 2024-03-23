@@ -1,6 +1,12 @@
-// eslint-disable-next-line unused-imports/no-unused-imports, no-unused-vars
 import React from "react";
 
+import {
+  AppContainerLayout,
+  CoreCard, CoreCardContent,
+  CoreForm, CoreLayoutItem, FORM_EDIT_MODE,
+  FORM_IDS
+} from "@wrappid/core";
+import { WrappidDataContext } from "@wrappid/styles";
 import {
   browserName,
   deviceType,
@@ -18,19 +24,12 @@ import { useSelector } from "react-redux";
  * should be the package json of user application
  */
 
-import CoreForm from "../../components/inputs/forms/CoreForm";
-import {
-  FORM_EDIT_MODE,
-  FORM_IDS
-} from "../../components/inputs/forms/coreFormConstants";
-import CoreCard from "../../components/surfaces/CoreCard";
-import CoreCardContent from "../../components/surfaces/CoreCardContent";
-import packageJSON from "../../package.json";
-import { getFullName } from "../../utils/helper";
-import { getLabel } from "../../utils/stringUtils";
+import { getFullName, getLabel } from "../utils/app.utils";
 
 export default function ReportIssueForm(props) {
   const { title, isStacktrace = true, stackTrace, labels } = props;
+  const { config } = React.useContext(WrappidDataContext);
+  const { packageInfo: packageJSON } = config;
   const { apiVersion } = useSelector((state) => state.app);
   const { role } = useSelector((state) => state.auth?.role || {});
   const profile = useSelector((state) => state.profile);
@@ -41,41 +40,41 @@ export default function ReportIssueForm(props) {
     <>
       <CoreLayoutItem id={AppContainerLayout.PLACEHOLDER.CONTENT}>
         <CoreCard>
-      <CoreCardContent>
-        <CoreForm
-          formId={FORM_IDS.__CREATE_ISSUE}
-          authenticated={false}
-          mode={FORM_EDIT_MODE}
-          initData={{
-            devInfo: JSON.stringify({
-              backend: { version: apiVersion?.version || "unknown" },
-              client : {
-                browser: `${browserName} Ver: ${fullBrowserVersion}`,
-                device : `${getLabel(deviceType)}${
-                  isMobile ? " " + mobileVendor + " " + mobileModel : ""
-                }`,
-                os       : `${osName} Ver: ${osVersion}`,
-                userAgent: navigator?.userAgent,
-              },
-              frontend: {
-                url    : window?.location?.href,
-                version: packageJSON?.version,
-              },
-            }),
-            isStacktrace: isStacktrace,
-            labels      : labels,
-            reporterInfo: JSON.stringify({
-              creationTime: new Date().toLocaleString(),
-              email       : contact?.email,
-              name        : getFullName(basic),
-              phone       : contact?.phone,
-              role        : role || "unknown",
-            }),
-            stackTrace: stackTrace,
-            title     : title,
-          }}
-        />
-      </CoreCardContent>
+          <CoreCardContent>
+            <CoreForm
+              formId={FORM_IDS.__CREATE_ISSUE}
+              authenticated={false}
+              mode={FORM_EDIT_MODE}
+              initData={{
+                devInfo: JSON.stringify({
+                  backend: { version: apiVersion?.version || "unknown" },
+                  client : {
+                    browser: `${browserName} Ver: ${fullBrowserVersion}`,
+                    device : `${getLabel(deviceType)}${
+                      isMobile ? " " + mobileVendor + " " + mobileModel : ""
+                    }`,
+                    os       : `${osName} Ver: ${osVersion}`,
+                    userAgent: navigator?.userAgent,
+                  },
+                  frontend: {
+                    url    : window?.location?.href,
+                    version: packageJSON?.version,
+                  },
+                }),
+                isStacktrace: isStacktrace,
+                labels      : labels,
+                reporterInfo: JSON.stringify({
+                  creationTime: new Date().toLocaleString(),
+                  email       : contact?.email,
+                  name        : getFullName(basic),
+                  phone       : contact?.phone,
+                  role        : role || "unknown",
+                }),
+                stackTrace: stackTrace,
+                title     : title,
+              }}
+            />
+          </CoreCardContent>
         </CoreCard>
       </CoreLayoutItem>
     </>
