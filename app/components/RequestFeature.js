@@ -1,5 +1,11 @@
 import ReportIssueForm from "./ReportIssueForm";
 
 export default function RequestFeature() {
-  return <ReportIssueForm labels={[{ label: "Feature Request" }]} />;
+  return (
+    <>
+      <CoreLayoutItem id={AppContainerLayout.PLACEHOLDER.CONTENT}>
+        <ReportIssueForm labels={[{ label: "Feature Request" }]} />
+      </CoreLayoutItem>
+    </>
+  );
 }

@@ -1,5 +1,11 @@
 import ReportIssueForm from "./ReportIssueForm";
 
 export default function RequestSupport() {
-  return <ReportIssueForm labels={[{ label: "Support Request" }]} />;
+  return (
+    <>
+      <CoreLayoutItem id={AppContainerLayout.PLACEHOLDER.CONTENT}>
+        <ReportIssueForm labels={[{ label: "Support Request" }]} />
+      </CoreLayoutItem>
+    </>
+  );
 }

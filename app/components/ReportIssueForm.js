@@ -1,12 +1,6 @@
-import {
-  FORM_IDS,
-  FORM_EDIT_MODE,
-  CoreForm,
-  CoreCardContent,
-  CoreCard,
-  getFullName,
-  config
-} from "@wrappid/core";
+// eslint-disable-next-line unused-imports/no-unused-imports, no-unused-vars
+import React from "react";
+
 import {
   browserName,
   deviceType,
@@ -19,16 +13,34 @@ import {
 } from "react-device-detect";
 import { useSelector } from "react-redux";
 
-// -- import { ApplicationRegistry } from "../../../../ApplicationRegistry";
+/**
+ * @todo this package json is core's
+ * should be the package json of user application
+ */
+
+import CoreForm from "../../components/inputs/forms/CoreForm";
+import {
+  FORM_EDIT_MODE,
+  FORM_IDS
+} from "../../components/inputs/forms/coreFormConstants";
+import CoreCard from "../../components/surfaces/CoreCard";
+import CoreCardContent from "../../components/surfaces/CoreCardContent";
+import packageJSON from "../../package.json";
+import { getFullName } from "../../utils/helper";
+import { getLabel } from "../../utils/stringUtils";
 
 export default function ReportIssueForm(props) {
   const { title, isStacktrace = true, stackTrace, labels } = props;
   const { apiVersion } = useSelector((state) => state.app);
-  const { role } = useSelector((state) => state.auth);
-  const { basic, contact } = useSelector((state) => state.profile);
+  const { role } = useSelector((state) => state.auth?.role || {});
+  const profile = useSelector((state) => state.profile);
+  const basic = profile?.basic;
+  const contact = profile?.contact;
 
   return (
-    <CoreCard>
+    <>
+      <CoreLayoutItem id={AppContainerLayout.PLACEHOLDER.CONTENT}>
+        <CoreCard>
       <CoreCardContent>
         <CoreForm
           formId={FORM_IDS.__CREATE_ISSUE}
@@ -36,23 +48,18 @@ export default function ReportIssueForm(props) {
           mode={FORM_EDIT_MODE}
           initData={{
             devInfo: JSON.stringify({
-              backend: {
-                url:
-                  process.env.REACT_APP_WRAPPID_backendUrl ||
-                  config?.wrappid?.backendUrl,
-                version: apiVersion?.version || "unknown",
-              },
-              client: {
+              backend: { version: apiVersion?.version || "unknown" },
+              client : {
                 browser: `${browserName} Ver: ${fullBrowserVersion}`,
-                device : `${deviceType}${
+                device : `${getLabel(deviceType)}${
                   isMobile ? " " + mobileVendor + " " + mobileModel : ""
                 }`,
                 os       : `${osName} Ver: ${osVersion}`,
-                userAgent: navigator.userAgent,
+                userAgent: navigator?.userAgent,
               },
               frontend: {
-                url: window.location.href,
-                // -- version: ApplicationRegistry.version,
+                url    : window?.location?.href,
+                version: packageJSON?.version,
               },
             }),
             isStacktrace: isStacktrace,
@@ -62,13 +69,15 @@ export default function ReportIssueForm(props) {
               email       : contact?.email,
               name        : getFullName(basic),
               phone       : contact?.phone,
-              role        : role?.role,
+              role        : role || "unknown",
             }),
             stackTrace: stackTrace,
             title     : title,
           }}
         />
       </CoreCardContent>
-    </CoreCard>
+        </CoreCard>
+      </CoreLayoutItem>
+    </>
   );
 }

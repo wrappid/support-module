@@ -1,5 +1,11 @@
 import ReportIssueForm from "./ReportIssueForm";
 
 export default function RequestEnhancement() {
-  return <ReportIssueForm labels={[{ label: "Enhancement Request" }]} />;
+  return (
+    <>
+      <CoreLayoutItem id={AppContainerLayout.PLACEHOLDER.CONTENT}>
+        <ReportIssueForm labels={[{ label: "Enhancement Request" }]} />
+      </CoreLayoutItem>
+    </>
+  );
 }
