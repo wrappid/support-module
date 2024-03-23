@@ -1,12 +1,12 @@
+import React from "react";
+
 import {
-  FORM_IDS,
-  FORM_EDIT_MODE,
-  CoreForm,
-  CoreCardContent,
-  CoreCard,
-  getFullName,
-  config
+  AppContainerLayout,
+  CoreCard, CoreCardContent,
+  CoreForm, CoreLayoutItem, FORM_EDIT_MODE,
+  FORM_IDS
 } from "@wrappid/core";
+import { WrappidDataContext } from "@wrappid/styles";
 import {
   browserName,
   deviceType,
@@ -19,56 +19,64 @@ import {
 } from "react-device-detect";
 import { useSelector } from "react-redux";
 
-// -- import { ApplicationRegistry } from "../../../../ApplicationRegistry";
+/**
+ * @todo this package json is core's
+ * should be the package json of user application
+ */
+
+import { getFullName, getLabel } from "../utils/app.utils";
 
 export default function ReportIssueForm(props) {
   const { title, isStacktrace = true, stackTrace, labels } = props;
+  const { config } = React.useContext(WrappidDataContext);
+  const { packageInfo: packageJSON } = config;
   const { apiVersion } = useSelector((state) => state.app);
-  const { role } = useSelector((state) => state.auth);
-  const { basic, contact } = useSelector((state) => state.profile);
+  const { role } = useSelector((state) => state.auth?.role || {});
+  const profile = useSelector((state) => state.profile);
+  const basic = profile?.basic;
+  const contact = profile?.contact;
 
   return (
-    <CoreCard>
-      <CoreCardContent>
-        <CoreForm
-          formId={FORM_IDS.__CREATE_ISSUE}
-          authenticated={false}
-          mode={FORM_EDIT_MODE}
-          initData={{
-            devInfo: JSON.stringify({
-              backend: {
-                url:
-                  process.env.REACT_APP_WRAPPID_backendUrl ||
-                  config?.wrappid?.backendUrl,
-                version: apiVersion?.version || "unknown",
-              },
-              client: {
-                browser: `${browserName} Ver: ${fullBrowserVersion}`,
-                device : `${deviceType}${
-                  isMobile ? " " + mobileVendor + " " + mobileModel : ""
-                }`,
-                os       : `${osName} Ver: ${osVersion}`,
-                userAgent: navigator.userAgent,
-              },
-              frontend: {
-                url: window.location.href,
-                // -- version: ApplicationRegistry.version,
-              },
-            }),
-            isStacktrace: isStacktrace,
-            labels      : labels,
-            reporterInfo: JSON.stringify({
-              creationTime: new Date().toLocaleString(),
-              email       : contact?.email,
-              name        : getFullName(basic),
-              phone       : contact?.phone,
-              role        : role?.role,
-            }),
-            stackTrace: stackTrace,
-            title     : title,
-          }}
-        />
-      </CoreCardContent>
-    </CoreCard>
+    <>
+      <CoreLayoutItem id={AppContainerLayout.PLACEHOLDER.CONTENT}>
+        <CoreCard>
+          <CoreCardContent>
+            <CoreForm
+              formId={FORM_IDS.__CREATE_ISSUE}
+              authenticated={false}
+              mode={FORM_EDIT_MODE}
+              initData={{
+                devInfo: JSON.stringify({
+                  backend: { version: apiVersion?.version || "unknown" },
+                  client : {
+                    browser: `${browserName} Ver: ${fullBrowserVersion}`,
+                    device : `${getLabel(deviceType)}${
+                      isMobile ? " " + mobileVendor + " " + mobileModel : ""
+                    }`,
+                    os       : `${osName} Ver: ${osVersion}`,
+                    userAgent: navigator?.userAgent,
+                  },
+                  frontend: {
+                    url    : window?.location?.href,
+                    version: packageJSON?.version,
+                  },
+                }),
+                isStacktrace: isStacktrace,
+                labels      : labels,
+                reporterInfo: JSON.stringify({
+                  creationTime: new Date().toLocaleString(),
+                  email       : contact?.email,
+                  name        : getFullName(basic),
+                  phone       : contact?.phone,
+                  role        : role || "unknown",
+                }),
+                stackTrace: stackTrace,
+                title     : title,
+              }}
+            />
+          </CoreCardContent>
+        </CoreCard>
+      </CoreLayoutItem>
+    </>
   );
 }
