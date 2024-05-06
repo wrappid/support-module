@@ -1,4 +1,4 @@
-import { configProvider } from "@wrappid/service-core";
+import { ApplicationContext } from "@wrappid/service-core";
 
 import fetch from "node-fetch-commonjs";
 
@@ -82,14 +82,14 @@ export const createIssue = async (
     const issueData = {
       title: title,
       body: issueBody,
-      labels: [...configProvider().github.defaultLabels, ...labels],
+      labels: [...ApplicationContext.getContext("config").github.defaultLabels, ...labels],
     };
 
-    const result = await fetch(configProvider().github.createIssueURL, {
+    const result = await fetch(ApplicationContext.getContext("config").github.createIssueURL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + configProvider().github.token,
+        Authorization: "Bearer " + ApplicationContext.getContext("config").github.token,
       },
       body: JSON.stringify(issueData),
     })

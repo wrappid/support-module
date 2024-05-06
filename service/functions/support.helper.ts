@@ -1,4 +1,4 @@
-import { configProvider } from "@wrappid/service-core";
+import { ApplicationContext } from "@wrappid/service-core";
 import fetch from "node-fetch-commonjs";
 import { createIssue } from "./support.functions";
 
@@ -33,7 +33,7 @@ export const createReportIssuePost = async (req:any) => {
         currentReporterInfo: reporterInfo});
       const headers = {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${configProvider().github.token}`
+        "Authorization": `Bearer ${ApplicationContext.getContext("config").github.token}`
       };
       const payload = {
         body: commentBody
@@ -76,11 +76,11 @@ export const createReportIssuePost = async (req:any) => {
 
 async function getAllIssueInfo(): Promise<UrlsTitlesBodyObj[]> {
   try {
-    const response = await fetch(configProvider().github.createIssueURL, {
+    const response = await fetch(ApplicationContext.getContext("config").github.createIssueURL, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + configProvider().github.token,
+        Authorization: "Bearer " + ApplicationContext.getContext("config").github.token,
       }
     });
     if (!response.ok) {
