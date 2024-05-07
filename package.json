@@ -1,6 +1,6 @@
 {
   "name": "support-module",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "This is support module for wrappid project.",
   "main": "index.js",
   "scripts": {

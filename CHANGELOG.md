@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://https//github.com/wrappid/support-module/compare/v0.0.2...v0.0.3) (2024-05-07)
+
+
+### Bug Fixes
+
+* **global:** :ambulance: impact handling for change in configprovider ([ca265c2](https://https//github.com/wrappid/support-module/commit/ca265c209ce5b4d07ae8caf14c82ce523ecf059c)), closes [#17](https://https//github.com/wrappid/support-module/issues/17)
+
 ### 0.0.2 (2024-03-23)
 
 
