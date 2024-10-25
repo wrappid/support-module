@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://https//github.com/wrappid/support-module/compare/v0.0.3...v0.0.4) (2024-10-25)
+
+
+### Bug Fixes
+
+* **core:** :recycle: liniting fix ([e4377f4](https://https//github.com/wrappid/support-module/commit/e4377f46c4496c88942fa3d96fca3e75fa0f5307)), closes [#20](https://https//github.com/wrappid/support-module/issues/20)
+
 ### [0.0.3](https://https//github.com/wrappid/support-module/compare/v0.0.2...v0.0.3) (2024-05-07)
 
 
