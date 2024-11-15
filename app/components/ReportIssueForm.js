@@ -31,10 +31,7 @@ export default function ReportIssueForm(props) {
   const { config } = React.useContext(WrappidDataContext);
   const { packageInfo: packageJSON } = config;
   const { apiVersion } = useSelector((state) => state.app);
-  const { role } = useSelector((state) => state.auth?.role || {});
-  const profile = useSelector((state) => state.profile);
-  const basic = profile?.basic;
-  const contact = profile?.contact;
+  const { role, user } = useSelector((state) => state.auth?.role || {});
 
   return (
     <>
@@ -65,9 +62,9 @@ export default function ReportIssueForm(props) {
                 labels      : labels,
                 reporterInfo: JSON.stringify({
                   creationTime: new Date().toLocaleString(),
-                  email       : contact?.email,
-                  name        : getFullName(basic),
-                  phone       : contact?.phone,
+                  email       : user?.email,
+                  name        : getFullName(user),
+                  phone       : user?.phone,
                   role        : role || "unknown",
                 }),
                 stackTrace: stackTrace,
