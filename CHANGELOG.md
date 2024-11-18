@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://https//github.com/wrappid/support-module/compare/v0.0.4...v0.0.5) (2024-11-18)
+
+
+### Bug Fixes
+
+* **core:** :bug: core and auth related impact handled ([5460c3c](https://https//github.com/wrappid/support-module/commit/5460c3c7013cadd9709be2a95dad4d3637715e3b))
+
 ### [0.0.4](https://https//github.com/wrappid/support-module/compare/v0.0.3...v0.0.4) (2024-10-25)
 
 
